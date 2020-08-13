@@ -1,14 +1,46 @@
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(5,4,3,2,1,0);
-void setup() {
-  lcd.begin(16,2); // start LCD
-  lcd.print("Nhat Lam Nguyen");
-  lcd.setCursor(0,1); // set toa do 
-  lcd.print("FEMAC"); // print
+int LM35 = A0; // lm35
+int PIR = 13;  // pin or PIR
+int value = 0;  // STATE for PIR
+int led = 12; // pin for led
 
+void setup() 
+{
+  lcd.begin(16,2); // start LCD
+  pinMode(PIR,INPUT); 
+  pinMode(led,OUTPUT);   
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  int read = analogRead(LM35); // Volt read on LM35
+  float voltage = read*5.0/1024.0;  //10mv = 1^C
+  float temp = voltage *100.0; // convert temp
+  
+  // hien thi LCD
+  //lcd.clear();
+  lcd.setCursor(0,0);  
+  lcd.print("Nhiet do: "); 
+  lcd.setCursor(11,0);
+  lcd.print(temp);
+  lcd.write(223);
+  lcd.print("C");
+  
+ // Read state on PIR
+  value = digitalRead(13);
+      if(value==HIGH)
+      {
+        digitalWrite(led,HIGH);  // out cho led
+        lcd.setCursor(1,1);
+        lcd.print("Motive !");   // out cho lcd
+        delay(100);
+      }
+      if(value==LOW)
+      {
+        digitalWrite(led,LOW);   // out cho led
+        lcd.setCursor(1,1); 
+        lcd.print("             ");  // delete Motive !
+        delay(100);
 
+  }
 }
