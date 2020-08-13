@@ -1,0 +1,21 @@
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27,16,2);
+void setup() {
+  Serial.begin(9600);
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print("Nhiet do : ");
+  lcd.setCursor(0,1);
+  
+}
+
+void loop() {
+  int val1 = analogRead(0);
+  int nhietdo = map(val1,0,308,0,150);
+  lcd.setCursor(11,0);
+  lcd.print(nhietdo);
+  if(nhietdo<10)
+  lcd.setCursor(12,0);
+  lcd.print(" ");
+}
