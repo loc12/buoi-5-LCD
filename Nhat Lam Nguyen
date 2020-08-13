@@ -1,0 +1,14 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(5,4,3,2,1,0);
+void setup() {
+  lcd.begin(16,2); // start LCD
+  lcd.print("Nhat Lam Nguyen");
+  lcd.setCursor(0,1); // set toa do 
+  lcd.print("FEMAC"); // print
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+}
