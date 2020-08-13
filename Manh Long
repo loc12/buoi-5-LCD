@@ -1,0 +1,25 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>// thu vien LCD cho I2C
+LiquidCrystal_I2C LCD(0x27,16,2);// Khai bao LCD 16x2
+int LM35= A0;// Cam bien nhiet do chan Analog A0
+void setup()
+{
+ Serial.begin(9600);// Khoi dong Serial o muc 9600 
+ LCD.init();//Khoi tao LCD
+ LCD.backlight();// bat den LCD
+}
+void loop()
+{
+  int Read = analogRead(A0);// doc chan A0
+  float volt = Read *5.0/1024.0;// tinh gia tri Volt tu Cam bien LM35
+  float nhiet_do= volt*100.0;// 10mV=1 doC
+  Serial.println(nhiet_do);
+  LCD.setCursor(0,0);// cot thu 2 , dong thu 0
+  LCD.print("LONG DEP TRAI ");// ghi noi dung
+  LCD.setCursor(0,1);// cot thu 2 , dong thu 1
+  LCD.print("NHIET DO: ");// ghi noi dung
+  LCD.setCursor(11,1);// cot thu 2 , dong thu 1
+  LCD.print(nhiet_do);// ghi noi dung
+  delay(500);
+  LCD.clear(); //xoa man hinh
+}
